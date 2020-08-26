@@ -8,7 +8,7 @@ hop_length = 512
 n0 = 9000
 n1 = 9100
 
-columnas = ['archivo' ,'zero_cr', 'zero_crossings_m' ,'spectral_centroid', 'spectral_bw' ,'spectral_rf', 'croma']
+columnas = ['archivo' ,'zero_cr' ,'spectral_centroid', 'spectral_bw' ,'spectral_rf', 'croma']
 for x in range(1, 21):
     columnas.append(f'mfcc_{x}')
 columnas.append('BPM')
@@ -23,7 +23,6 @@ for g in generos:
         nombre = nombre.replace(' ', '')
         zero_crossings = librosa.zero_crossings(samples[n0:n1], pad=False)
         zero_crossings = sum(zero_crossings)
-        zero_crossings_m = np.mean(librosa.zero_crossings(samples[n0:n1], pad=False))
         spectral_centroid = np.mean(librosa.feature.spectral_centroid(y = samples, sr = sr))
         spectral_bw = np.mean(librosa.feature.spectral_bandwidth(y = samples, sr = sr))
         spectral_rf = np.mean(librosa.feature.spectral_rolloff(y = samples, sr = sr))
@@ -35,7 +34,7 @@ for g in generos:
         auto_c = librosa.util.normalize(auto_c)
         auto_c = np.mean(auto_c)
         BPM = librosa.beat.tempo(onset_envelope = env, sr = sr, hop_length = hop_length)[0]
-        x = f'{nombre} {zero_crossings} {zero_crossings_m} {spectral_centroid} {spectral_bw} {spectral_rf} {croma}'
+        x = f'{nombre} {zero_crossings} {spectral_centroid} {spectral_bw} {spectral_rf} {croma}'
         for m in mfcc:
             x += f' {np.mean(m)}'
         x += f' {BPM} {auto_c} {g}'
