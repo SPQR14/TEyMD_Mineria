@@ -17,8 +17,8 @@ columnas.append('genero')
 
 df = pd.DataFrame(columns = columnas)
 for g in generos:
-    for nombre in os.listdir(f'..\\{g}'):
-        cancion = f'..\\{g}\\{nombre}'
+    for nombre in os.listdir(f'../{g}'):
+        cancion = f'../{g}/{nombre}'
         samples, sr = librosa.load(cancion, sr = None, mono = True, offset = 0.0, duration = None)
         nombre = nombre.replace(' ', '')
         zero_crossings = librosa.zero_crossings(samples[n0:n1], pad=False)
@@ -42,4 +42,4 @@ for g in generos:
         df = df.append(d, ignore_index = True)
         print(u'Añadido el registro de: ' + nombre)
 
-df.to_csv('..\\data_set\\datos_musica.csv', sep = ',', encoding = 'utf8')
+df.to_csv('../data_set/datos_musica.csv', sep = ',', encoding = 'utf8')
